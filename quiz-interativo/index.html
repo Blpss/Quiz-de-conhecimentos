@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Quiz de Conhecimentos Gerais</title>
+  <style>
+    body {
+      background-color: #000;
+      color: #FFD700;
+      font-family: 'Arial', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .quiz-container {
+      text-align: center;
+      background-color: #111;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px #FFD700;
+      width: 400px;
+    }
+
+    h1 {
+      font-size: 2.2em;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #FFD700;
+    }
+
+    .question {
+      font-size: 1.2em;
+      margin-bottom: 20px;
+    }
+
+    .options button {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      background-color: #FFD700;
+      color: #000;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .options button:hover {
+      background-color: #000;
+      color: #FFD700;
+      border: 2px solid #FFD700;
+      box-shadow: 0 0 10px #FFD700;
+    }
+
+    .options button.correct {
+      background-color: #28a745;
+      color: #fff;
+    }
+
+    .options button.wrong {
+      background-color: #dc3545;
+      color: #fff;
+    }
+
+    .feedback {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="quiz-container">
+    <h1>Quiz de Conhecimentos Gerais</h1>
+    <div class="question"></div>
+    <div class="options"></div>
+    <div class="feedback"></div>
+  </div>
+
+  <script>
+    const quizData = [
+      {
+        question: "Qual é a capital do Brasil?",
+        options: ["São Paulo", "Brasília", "Rio de Janeiro", "Belo Horizonte"],
+        answer: "Brasília"
+      },
+      {
+        question: "Qual é o maior planeta do Sistema Solar?",
+        options: ["Terra", "Júpiter", "Saturno", "Marte"],
+        answer: "Júpiter"
+      },
+      {
+        question: "Quem pintou a Mona Lisa?",
+        options: ["Michelangelo", "Leonardo da Vinci", "Van Gogh", "Picasso"],
+        answer: "Leonardo da Vinci"
+      }
+    ];
+
+    let currentQuestion = 0;
+    const questionEl = document.querySelector(".question");
+    const optionsEl = document.querySelector(".options");
+    const feedbackEl = document.querySelector(".feedback");
+
+    function loadQuestion() {
+      const q = quizData[currentQuestion];
+      questionEl.textContent = q.question;
+      optionsEl.innerHTML = "";
+      feedbackEl.textContent = "";
+
+      q.options.forEach(opt => {
+        const btn = document.createElement("button");
+        btn.textContent = opt;
+        btn.addEventListener("click", () => checkAnswer(btn, q.answer));
+        optionsEl.appendChild(btn);
+      });
+    }
+
+    function checkAnswer(button, correctAnswer) {
+      const buttons = document.querySelectorAll(".options button");
+      buttons.forEach(b => b.disabled = true);
+
+      if (button.textContent === correctAnswer) {
+        button.classList.add("correct");
+        feedbackEl.textContent = "✅ Resposta correta!";
+        feedbackEl.style.color = "#28a745";
+      } else {
+        button.classList.add("wrong");
+        feedbackEl.textContent = "❌ Resposta errada!";
+        feedbackEl.style.color = "#dc3545";
+      }
+
+      setTimeout(() => {
+        currentQuestion++;
+        if (currentQuestion < quizData.length) {
+          loadQuestion();
+        } else {
+          questionEl.textContent = "Fim do Quiz!";
+          optionsEl.innerHTML = "";
+          feedbackEl.textContent = "🎉 Parabéns por concluir!";
+          feedbackEl.style.color = "#FFD700";
+        }
+      }, 1500);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>

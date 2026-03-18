@@ -1,0 +1,26 @@
+/* Animação suave */
+.fade {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+/* Responsivo */
+@media (max-width: 600px) {
+  button {
+    width: 90%;
+    font-size: 18px;
+  }
+
+  body {
+    padding: 20px;
+  }
+}
+
+/* Botão de reinício */
+button:last-child {
+  background-color: #27ae60;
+}
+
+button:last-child:hover {
+  background-color: #2ecc71;
+}
